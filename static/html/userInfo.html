@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>华彩员工详细信息</title>
+    <link rel="stylesheet" href="../css/userinfo.css">
+    <link rel="stylesheet" href="../fonts/iconfont.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            华彩物业人员信息查看或修改页面
+        </div>
+        <div class="header-bottom">
+            当前用户:<span id="now-user">一般用户</span>
+        </div>
+    </div>
+    <div>
+        <div class="sidebar">
+
+            <input id="add-group"type="button" value="添加项目">
+            <ul>
+                <li><b>项目名称</b></li>
+                <li><i class="iconfont">&#xe601;</i>高铁站</li>
+                <li><i class="iconfont">&#xe601;</i>火车站</li>
+                <li><i class="iconfont">&#xe602;</i>文化馆</li>
+                <li><i class="iconfont">&#xe600;</i>裕溪苑</li>
+                <li><i class="iconfont">&#xe601;</i>南湖公园</li>
+                <li><i class="iconfont">&#xe601;</i>人民广场</li>
+                <li><i class="iconfont">&#xe602;</i>天下滁房</li>
+                <li><i class="iconfont">&#xe600;</i>职业花苑</li>
+                <li><i class="iconfont">&#xe600;</i>北湖小区</li>
+                <li><i class="iconfont">&#xe600;</i>阳光河畔</li>
+            </ul>
+        </div>
+
+        <div class="main">
+
+            <!--user-info-page-->
+
+            <div class="user-info-page">
+
+                <div class="user-info-page-top">双击行进行修改或查看详细信息
+                </div>
+
+                <div class="search">
+                    <input id='add_button' type="button" value="添加">
+                    <div class="search-content">
+                        <input type="text">
+                        <input id="search_button" type="button" value="搜索">
+                    </div>
+                </div>
+
+                <div class="user-info-page-content">
+                    <table class="info-page-table">
+                        <tr>
+                            <th>序号</th>
+                            <th>姓名</th>
+                            <th>身份证号码</th>
+                            <th>出生年月</th>
+                            <th>职务</th>
+                            <th>所属项目</th>
+                        </tr>
+                        <tr>
+                            <td>001</td>
+                            <td>黄雨</td>
+                            <td>341103199706134217</td>
+                            <td>1997-06-12</td>
+                            <td>总部职员</td>
+                            <td>市场部</td>
+                        </tr>
+                        <tr>
+                            <td>001</td>
+                            <td>黄雨</td>
+                            <td>341103199706134217</td>
+                            <td>1997-06-12</td>
+                            <td>总部职员</td>
+                            <td>市场部</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!--_add_page-->
+
+            <div class="add-user-page">
+                <div class="add-user-page-top"><input id="back_user_info" type="button" value="返回"></div>
+                <div class="add-user-page-left">
+                    <span>姓名:</span><input type="text" />
+                    <span>身份证码:</span><input type="text" /><p>
+                    <span>工资:</span><input type="text" />
+                    <span>出生年月:</span><input type="text" /><p>
+                    <span>入职时间:</span><input type="text" />
+                    <span>联系方式:</span><input type="text" /><p>
+                    <span>年龄:</span><input type="text" />
+                    <span>是否投保:</span><select>
+                        <option value="1">是</option>
+                        <option value="2">否</option>
+                    </select><p>
+                    <span>所在项目:</span><select>
+                        <option value="1">高铁站</option>
+                        <option value="2">火车站</option>
+                        <option value="3">南湖公园</option>
+                        <option value="4">人民广场</option>
+                        <option value="5">天下滁房</option>
+                        <option value="6">职业花苑</option>
+                        <option value="7">北湖小区</option>
+                        <option value="8">阳光河畔</option>
+                        <option value="9">文化馆</option>
+                    </select>
+                    <span>所在职位:</span><select>
+                        <option value="1">保洁</option>
+                        <option value="2">保安</option>
+                        <option value="3">客服</option>
+                        <option value="4">水电工程</option>
+                        <option value="5">绿化工程</option>
+                        <option value="6">项目经理</option>
+                        <option value="7">副总经理</option>
+                        <option value="8">总经理</option>
+                    </select><p>
+                </div>
+
+                <div class="add-user-page-right">
+                    <span>上传员工照片</span>
+                    <img class="input_img" src="../toux.jpg" width="120" height="150">
+                    <input id="upload" class="input_file" type="file" value="上传照片">
+                </div>
+
+
+                <div class="add-user-page-footer">
+                    <div>
+                        <input id="add_user" type="button" value="添加信息">
+                    </div>
+                </div>
+
+            </div>
+
+            <!--modify_page-->
+
+
+            <div class="modify-info-page">
+                <div class="modify-info-page-top"><input id="modify_back" type="button" value="返回"></div>
+                <div class="modify-info-page-left">
+                    <span>姓名:</span><input type="text" />
+                    <span>身份证码:</span><input type="text" /><p>
+                    <span>工资:</span><input type="text" />
+                    <span>出生年月:</span><input type="text" /><p>
+                    <span>入职时间:</span><input type="text" />
+                    <span>联系方式:</span><input type="text" /><p>
+                    <span>年龄:</span><input type="text" />
+                    <span>是否投保:</span><select>
+                    <option value="1">是</option>
+                    <option value="2">否</option>
+                </select><p>
+                    <span>所在项目:</span><select>
+                    <option value="1">高铁站</option>
+                    <option value="2">火车站</option>
+                    <option value="3">南湖公园</option>
+                    <option value="4">人民广场</option>
+                    <option value="5">天下滁房</option>
+                    <option value="6">职业花苑</option>
+                    <option value="7">北湖小区</option>
+                    <option value="8">阳光河畔</option>
+                    <option value="9">文化馆</option>
+                </select>
+                    <span>所在职位:</span><select>
+                    <option value="1">保洁</option>
+                    <option value="2">保安</option>
+                    <option value="3">客服</option>
+                    <option value="4">水电工程</option>
+                    <option value="5">绿化工程</option>
+                    <option value="6">项目经理</option>
+                    <option value="7">副总经理</option>
+                    <option value="8">总经理</option>
+                </select><p>
+                </div>
+
+                <div class="modify-info-page-right">
+                    <span>修改员工照片</span>
+                    <img class="input_img" src="../toux.jpg" width="120" height="150">
+                    <input id="modify_upload" class="input_file" type="file" value="上传照片">
+                </div>
+
+                <div class="modify-info-page-center">
+                    <table class="modify-page-table">
+                        <tr>
+                            <th>时间</th>
+                            <th>事件(详细)</th>
+                            <th><a href="http://www.baidu.com"  target="_blank">点击查看</a></th>
+                            <th>备注</th>
+
+                        </tr>
+                        <tr>
+
+                            <td>1997-06-12</td>
+                            <td>341103199706134217</td>
+                            <td><a href="http://www.baidu.com"  target="_blank">点击查看</a></td>
+                            <td>1997-06-12</td>
+                        </tr>
+                        <tr>
+                            <td>1997-06-12</td>
+                            <td>341103199706134217</td>
+                            <td><a href="http://www.baidu.com"  target="_blank">点击查看</a></td>
+                            <td>1997-06-12</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modify-info-page-footer">
+                    <div>
+                        <input id="modify_info" type="button" value="修改信息">
+                        <input id="out_user" type="button" value="办理离职">
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script src="../js/jquery-2.2.1.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/userinfo.js"></script>
+</body>
+</html>

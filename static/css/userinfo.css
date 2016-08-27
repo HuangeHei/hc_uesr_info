@@ -1,0 +1,539 @@
+* {
+    margin:0;
+    padding:0;
+    -webkit-text-stroke-width: 0px;
+    -moz-text-stroke-width: 0px;
+    -o-text-stroke-width: 0px;
+    -ms-text-stroke-width: 0px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing:border-box;
+}
+body {
+    font-family: "Hiragino Sans GB","Microsoft Yahei",arial,\5b8b\4f53,"Helvetica Neue",Helvetica,STHeiTi,sans-serif;
+    font-size: 12px;
+    color: #000;
+}
+a {
+    color: #000;
+    font-size: 12px;
+    text-decoration: none;
+    blr:expression(this.onFocus=this.blur());
+}
+input,select,textarea {
+    vertical-align:middle;
+    width: auto;
+    outline: none;
+    border:0;
+}
+select {
+    appearance: normal;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+img {
+    vertical-align:middle;
+    border:0;
+    outline:none;
+}
+
+div, p, dl, dt, dd, ul, ol, li, h1,h2,h3,h4,h5,h6 {
+    display: block;
+    width: auto;
+    height: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing:0px;
+    border: 0;
+}
+
+/*---------------------------------------------------------------*/
+
+.header{/*header 头部*/
+    position: fixed;
+    z-index: 1;
+    height: 80px;
+    width: 100%;
+    font-family: "Helvetica", "Tahoma", "Microsoft Yahei", "微软雅黑", "Simsun", "宋体";;
+}
+
+.header-top{ /*header 头部上部分*/
+
+    width: 100%;
+    height: 50px;
+    background-color: #2299ee;
+    color: #FFF;
+    font-size: 20px;
+    line-height: 50px;
+    text-indent: 20px;
+}
+
+.header-bottom{/*header 头部下部分*/
+
+    width: 100%;
+    height: 30px;
+    background-color: #fff;
+    border-bottom: 1px solid #d7d8d9;
+    color: #000;
+    font-size: 16px;
+    line-height: 30px;
+    text-indent: 20px;
+}
+
+.sidebar{/*侧边栏*/
+    position: fixed;
+    z-index: 2;
+    width:20%;
+    height: 100%;
+    margin-top:80px;
+    border-right: 1px solid #d7d8d9;
+}
+.sidebar input[type="button"]{/*侧边栏button*/
+    display:block;
+    width:150px;
+    height: 40px;
+    margin:0 auto;
+    margin-top:50px;
+    background-color:  #2299ee;
+    border-radius:3px;
+    color: #FFFFFF;
+    font-size: 14px;
+    line-height: 25px;
+    cursor:pointer;
+
+}
+
+.sidebar ul{/*侧边栏ul*/
+    margin-top:35px;
+    padding-left: 10px;
+    text-align: center;
+}
+.sidebar li{/*侧边栏li*/
+    width:100%;
+    height: 35px;
+    color: #767676;
+    font-size: 16px;
+    line-height: 35px;
+    cursor: pointer;
+}
+.sidebar li:hover{/*侧边栏li:hover*/
+    border-left: 2px solid  #2299ee;
+    color: #2299ee;
+    font-weight: 600;
+}
+.sidebar i{/*侧边栏字体图标*/
+    margin-right: 10px;
+}
+
+
+.main{/*主题*/
+    float: right;
+    width:80%;
+    margin-top:80px;
+    padding: 50px 0px 0px 50px;
+}
+
+.user-info-page{
+    display:block;
+}
+
+.user-info-page-top {
+
+    clear: both;
+    width: 90%;
+    height: 50px;
+    overflow: hidden;
+    margin-bottom:20px;
+    border-bottom: 1px solid  #eeeeee;
+    color: #767676;
+    font-size: 24px;
+    line-height: 24px;
+}
+
+.search{
+
+    width: 90%;
+    height: 41px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height:41px;
+
+}
+
+.search input[type="text"]{
+    margin-left:10px;
+    width:300px;
+    height: 30px;
+    line-height: 30px;
+    border:1px solid #c8cacc;
+    border-radius: 2px;
+    font-size: 14px;
+    text-indent: 15px;
+    color: #767676;
+}
+
+.search input[type="button"]{
+
+    width:100px;
+    height: 30px;
+
+    margin-left: 10px;
+    border-radius:3px;
+
+    background-color:  #2299ee;
+
+    color: #FFFFFF;
+    font-size: 14px;
+    line-height: 30px;
+    cursor:pointer;
+}
+.search-content{
+    float: right;
+}
+
+.user-info-page-content{
+    width: 90%;
+    font-size: 16px;
+}
+
+table.info-page-table {
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+    color:#333333;
+    font-size:15px;
+    text-align: center;
+    cursor: pointer;
+}
+table.info-page-table tr{
+    border-collapse: collapse;
+    border-top:1px solid #c8cacc;
+    border-bottom:1px solid #c8cacc;
+}
+table.info-page-table th {
+    padding: 8px;
+    background-color: #f7f7f7;
+}
+table.info-page-table td {
+    padding: 8px;
+    background-color: #fff;
+}
+table.info-page-table tr:hover {
+    color: #fff;
+    background-color:  #2299ee;
+}
+table.info-page-table tr:hover td{ /*tr行变色要想生效必须要让td的背景颜色变没*/
+    background: none;
+}
+
+table.info-page-table tr:hover th{ /*tr行变色要想生效必须要让td的背景颜色变没*/
+    color: #000;
+    background-color: #f7f7f7;
+}
+
+
+.add-user-page{/*-----------------add-page------------------*/
+    display: none;
+    font-size: 16px;
+}
+
+.add-user-page-top{
+    clear: both;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    width: 100%;
+}
+.add-user-page-right{
+    float: right;
+    width:30%;
+    height: 100%;
+}
+
+.add-user-page-left{
+    float: left;
+    width:70%;
+    text-align: center;
+}
+
+
+.add-user-page-top input[type="button"]{
+
+    width:100px;
+    height: 30px;
+    border-radius:3px;
+    background-color:  #2299ee;
+    color: #FFFFFF;
+    font-size: 14px;
+    line-height: 30px;
+    cursor:pointer;
+}
+
+
+.add-user-page-left input[type="text"]{
+
+    width:200px;
+    height: 30px;
+    margin:10px;
+    border:1px solid #c8cacc;
+    border-radius: 2px;
+    font-size: 16px;
+    line-height: 30px;
+    text-indent: 15px;
+    color: #767676;
+}
+
+.add-user-page-left select{
+
+    height: 30px;
+    width:200px;
+    margin:10px;
+    border:1px solid #d7d8d9;
+    border-radius: 0;
+    font-size: 14px;
+    text-indent: 10px;
+    line-height: 30px;
+    cursor: pointer;
+}
+.add-user-page-left span{
+    display: inline-block;
+    width: 80px;
+    text-align: left;
+}
+
+.add-user-page-left input[type="button"]{
+    display: block;
+    width:80px;
+    height: 40px;
+    margin:10px;
+    margin-top:30px;
+    background-color:  red;
+    border-radius:3px;
+    color: #FFFFFF;
+    font-size: 14px;
+    line-height: 25px;
+    cursor:pointer;
+}
+
+.add-user-page-right span{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.add-user-page-right img{
+    display: block;
+    margin: 0 auto;
+    margin-top:20px;
+    cursor: pointer;
+}
+
+.add-user-page-right input[type="file"]{
+    display: block;
+    width: 150px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+
+
+.add-user-page-footer{
+    clear: both;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.add-user-page-footer input[type="button"]{
+    width:150px;
+    height: 40px;
+    border-radius:3px;
+    color: #FFFFFF;
+    background-color:#2299ee;
+    font-size: 14px;
+    line-height: 25px;
+    cursor:pointer;
+    margin:10px;
+    margin-top:30px;
+
+}
+
+.add-user-page-footer div{
+    margin:0 auto;
+}
+
+.modify-info-page{/*-----------------add-page------------------*/
+    display:none;
+    font-size: 16px;
+}
+
+.modify-info-page-top{
+    clear: both;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    width: 100%;
+}
+.modify-info-page-right{
+    float: right;
+    width:30%;
+    height: 100%;
+}
+
+.modify-info-page-left{
+    float: left;
+    width:70%;
+    text-align: center;
+}
+
+
+.modify-info-page-top input[type="button"]{
+
+    width:100px;
+    height: 30px;
+    border-radius:3px;
+    background-color:  #2299ee;
+    color: #FFFFFF;
+    font-size: 14px;
+    line-height: 30px;
+    cursor:pointer;
+}
+
+
+.modify-info-page-left input[type="text"]{
+
+    width:200px;
+    height: 30px;
+    margin:10px;
+    border:1px solid #c8cacc;
+    border-radius: 2px;
+    font-size: 16px;
+    line-height: 30px;
+    text-indent: 15px;
+    color: #767676;
+}
+
+.modify-info-page-left select{
+
+    height: 30px;
+    width:200px;
+    margin:10px;
+    border:1px solid #d7d8d9;
+    border-radius: 0;
+    font-size: 14px;
+    text-indent: 10px;
+    line-height: 30px;
+    cursor: pointer;
+}
+.modify-info-page-left span{
+    display: inline-block;
+    width: 80px;
+    text-align: left;
+}
+
+.modify-info-page-left input[type="button"]{
+    display: block;
+    width:80px;
+    height: 40px;
+    margin:10px;
+    margin-top:30px;
+    background-color:#2299ee;
+    border-radius:3px;
+    color: #FFFFFF;
+    font-size: 14px;
+    line-height: 25px;
+    cursor:pointer;
+}
+
+.modify-info-page-right span{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.modify-info-page-right img{
+    display: block;
+    margin: 0 auto;
+    margin-top:20px;
+    cursor: pointer;
+}
+
+.modify-info-page-right input[type="file"]{
+    display: block;
+    width: 150px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.modify-info-page-center{
+    display: block;
+    clear: both;
+    width: 90%;
+    padding:20px 0px 0px 20px ;
+}
+/*----------------- 表格 -----------------*/
+table.modify-page-table {
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+    color:#333333;
+    font-size:15px;
+    text-align: center;
+    cursor: pointer;
+}
+table.modify-page-table tr{
+    border-collapse: collapse;
+    border-top:1px solid #c8cacc;
+    border-bottom:1px solid #c8cacc;
+}
+table.modify-page-table th {
+    padding: 8px;
+    background-color: #f7f7f7;
+}
+table.modify-page-table td {
+    padding: 8px;
+    background-color: #fff;
+}
+table.modify-page-table tr:hover {
+    color: #fff;
+    background-color:  #2299ee;
+}
+table.modify-page-table tr:hover td{ /*tr行变色要想生效必须要让td的背景颜色变没*/
+    background: none;
+}
+table.modify-page-table tr:hover th{
+    color: #000;
+    background-color: #f7f7f7;
+}
+/*----------------- 表格 -----------------*/
+
+.modify-info-page-footer{
+    clear: both;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.modify-info-page-footer input[type="button"]{
+    width:150px;
+    height: 40px;
+    border-radius:3px;
+    color: #FFFFFF;
+    background-color:  red;
+    font-size: 14px;
+    line-height: 25px;
+    cursor:pointer;
+    margin:10px;
+    margin-top:30px;
+
+}
+
+
+.modify-info-page-footer div{
+    margin:0 auto;
+}
