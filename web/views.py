@@ -7,3 +7,9 @@ def userinfo(request):
     return render_to_response('userInfo.html')
     #return HttpResponse('userinfo')
 
+def adduser(request):
+    if request.method == 'POST':
+        print(request.POST[''])
+        return HttpResponse()
+    else:
+        return HttpResponse('no ok')

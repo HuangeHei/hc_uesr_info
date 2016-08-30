@@ -20,5 +20,6 @@ import web.views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'userinfo/$', web.views.userinfo,name='userinfo'),
+    url(r'adduser/$', web.views.adduser, name='adduser'),
     url(r'^$',web.views.userinfo,name='userinfo'),#开头为无的
 ]

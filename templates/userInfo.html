@@ -85,55 +85,56 @@
             <!--_add_page-->
 
             <div class="add-user-page">
+                <form action="adduser/" method="post">
                 <div class="add-user-page-top"><input id="back_user_info" type="button" value="返回"></div>
-                <div class="add-user-page-left">
-                    <span>姓名:</span><input type="text" />
-                    <span>身份证码:</span><input type="text" /><p>
-                    <span>工资:</span><input type="text" />
-                    <span>出生年月:</span><input type="text" /><p>
-                    <span>入职时间:</span><input type="text" />
-                    <span>联系方式:</span><input type="text" /><p>
-                    <span>年龄:</span><input type="text" />
-                    <span>是否投保:</span><select>
-                        <option value="1">是</option>
-                        <option value="2">否</option>
-                    </select><p>
-                    <span>所在项目:</span><select>
-                        <option value="1">高铁站</option>
-                        <option value="2">火车站</option>
-                        <option value="3">南湖公园</option>
-                        <option value="4">人民广场</option>
-                        <option value="5">天下滁房</option>
-                        <option value="6">职业花苑</option>
-                        <option value="7">北湖小区</option>
-                        <option value="8">阳光河畔</option>
-                        <option value="9">文化馆</option>
-                    </select>
-                    <span>所在职位:</span><select>
-                        <option value="1">保洁</option>
-                        <option value="2">保安</option>
-                        <option value="3">客服</option>
-                        <option value="4">水电工程</option>
-                        <option value="5">绿化工程</option>
-                        <option value="6">项目经理</option>
-                        <option value="7">副总经理</option>
-                        <option value="8">总经理</option>
-                    </select><p>
-                </div>
-
-                <div class="add-user-page-right">
-                    <span>上传员工照片</span>
-                    <img class="input_img" src="{% static "toux.jpg" %}" width="120" height="150">
-                    <input id="upload" class="input_file" type="file" value="上传照片">
-                </div>
-
-
-                <div class="add-user-page-footer">
-                    <div>
-                        <input id="add_user" type="button" value="添加信息">
+                    <div class="add-user-page-left">
+                        <span>姓名:</span><input id="name" type="text" />
+                        <span>身份证码:</span><input id="id_number" type="text" /><p>
+                        <span>工资:</span><input id="wages" type="text" />
+                        <span>出生年月:</span><input id="birth_date" type="text" /><p>
+                        <span>入职时间:</span><input id="date_of_joining" type="text" />
+                        <span>联系方式:</span><input id="contact" type="text" /><p>
+                        <span>年龄:</span><input id="age" type="text" />
+                        <span>是否投保:</span><select id="insurer">
+                            <option value="1">是</option>
+                            <option value="2">否</option>
+                        </select><p>
+                        <span>所在项目:</span><select id="group">
+                            <option value="1">高铁站</option>
+                            <option value="2">火车站</option>
+                            <option value="3">南湖公园</option>
+                            <option value="4">人民广场</option>
+                            <option value="5">天下滁房</option>
+                            <option value="6">职业花苑</option>
+                            <option value="7">北湖小区</option>
+                            <option value="8">阳光河畔</option>
+                            <option value="9">文化馆</option>
+                        </select>
+                        <span>所在职位:</span><select id="position">
+                            <option value="1">保洁</option>
+                            <option value="2">保安</option>
+                            <option value="3">客服</option>
+                            <option value="4">水电工程</option>
+                            <option value="5">绿化工程</option>
+                            <option value="6">项目经理</option>
+                            <option value="7">副总经理</option>
+                            <option value="8">总经理</option>
+                        </select><p>
                     </div>
-                </div>
 
+                    <div class="add-user-page-right">
+                        <span>上传员工照片</span>
+                        <img class="input_img" src="{% static "toux.jpg" %}" width="120" height="150">
+                        <input id="upload" class="input_file" type="file" value="上传照片">
+                    </div>
+
+
+                    <div class="add-user-page-footer">
+                        <div>
+                            <input id="add_user" type="submit" value="添加信息">
+                        </div>
+                    </div>
+                </form>
             </div>
 
             <!--modify_page-->

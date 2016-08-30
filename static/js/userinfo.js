@@ -51,14 +51,12 @@ $(".user-info-page tr").dblclick(function () {//点击要修改的行,获取身�
 });
 
 $("#search_button").click(function () {
-    /*搜索按钮触发*/
-    alert('search_button')
+    
 });
 
 
 $("#add_user").click(function () {
     /*添加人员按钮触发*/
-    alert('add_user')
 });
 
 $("#out_user").click(function () {
