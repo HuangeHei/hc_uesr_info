@@ -132,3 +132,5 @@ TEMPLATE_DIRS = (                   # 设置template_dir的地址
     os.path.join(BASE_DIR,
                  'templates/'),
 )
+
+USER_PHOTO_PATH = 'static/user_photo/' # 用户照片存放地址

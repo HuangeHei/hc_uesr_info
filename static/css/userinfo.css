@@ -349,7 +349,7 @@ table.info-page-table tr:hover th{ /*tr行变色要想生效必须要让td的背
     text-align: center;
 }
 
-.add-user-page-footer input[type="button"]{
+.add-user-page-footer input[type="submit"]{
     width:150px;
     height: 40px;
     border-radius:3px;
