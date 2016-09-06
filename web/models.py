@@ -12,7 +12,7 @@ class position(models.Model):
 
 class user_info(models.Model):
     name = models.CharField(max_length=256)                                         #姓名
-    id_number = models.CharField(max_length=256)                                    #身份证号码
+    id_number = models.CharField(primary_key=True,max_length=256)                                    #身份证号码
     wages = models.IntegerField()                                                   #工资
     birth_date = models.DateTimeField()                                             #生日
     date_of_joining = models.DateTimeField()   #auto_now=True自动设置入职时间          #入职时间
@@ -37,3 +37,4 @@ class user_entry(models.Model):
 
 #update sqlite_sequence SET seq = 0 where name ='web_userinfo_photo'; 设置表内自增ID为0
 #delete from web_user_info; 清空表内数据
+#primary_key=True 主键不可重复

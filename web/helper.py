@@ -3,6 +3,7 @@ from django.shortcuts import render,render_to_response,redirect
 from random import Random
 from hc_user_info.settings import USER_PHOTO_PATH
 from web.models import user_info,userinfo_photo,group,position,user_entry
+import datetime
 
 def random_str(randomlength=28):#生成随机字符串 28位
     str = ''
@@ -82,8 +83,9 @@ def convert_to_dicts(objs):
         dict = {}
         dict.update(item.__dict__)
         dict.pop("_state", None)  # 去除掉多余的字段
-        dict['date_of_joining'] = str(dict['date_of_joining']).split(' ')[0]
-        dict['birth_date'] = str(dict['birth_date']).split(' ')[0]
+        for key in dict.keys():
+            if type(dict[key]) == datetime.datetime:
+                dict[key] = str(dict[key]).split(' ')[0]
 
         obj_arr.append(dict)
 

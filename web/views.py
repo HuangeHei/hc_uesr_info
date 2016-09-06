@@ -1,7 +1,7 @@
 from django.shortcuts import render,render_to_response,redirect #返回Html网页,和跳转
 from django.http import HttpResponse
 from web.helper import upfile_save,add_user_info,convert_to_dicts
-from web.models import user_info,userinfo_photo,group,position
+from web.models import user_info,userinfo_photo,group,position,user_entry
 import json
 # Create your views here.
 
@@ -11,7 +11,6 @@ import json
 def userinfo(request):
     group_list = group.objects.all()
     position_list = position.objects.all()
-    print(group_list[0].group_name)
     return render_to_response('userInfo.html',{'group_list':group_list,'position_list':position_list})
 
 def adduser(request):
@@ -37,6 +36,20 @@ def get_group_user(request):
 
 def get_user(request):
     if request.method == 'POST':
-        list_tmp = user_info.objects.filter(id_number=request.POST['id_number'])
-        user_list = convert_to_dicts(list_tmp)
-        return HttpResponse(json.dumps(user_list))
+
+        ret = {}
+
+        entry_tmp = user_entry.objects.filter(user_id_number=request.POST['id_number'])
+        user_img = userinfo_photo.objects.filter(user_id_number=request.POST['id_number'])
+        user_tmp = user_info.objects.filter(id_number=request.POST['id_number'])
+
+
+        user_dict = convert_to_dicts(user_tmp)
+        img_dict = convert_to_dicts(user_img)
+        entry_dict = convert_to_dicts(entry_tmp)
+
+        ret['entry_dict'] = entry_dict
+        ret['user_dict'] = user_dict
+        ret['img_dict'] = img_dict
+
+        return HttpResponse(json.dumps(ret))

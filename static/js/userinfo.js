@@ -63,36 +63,52 @@ $("#modify_back").click(function () {
 });
 
 
-$(".user-info-page tr").dblclick(function () {//点击要修改的行,获取身份证号,跳转修改页面,从数据库拿信息进行填充
+$(".info-page-table").delegate('tr','dblclick',function(){//点击要修改的行,获取身份证号,跳转修改页面,从数据库拿信息进行填充
+
     //dblclick 双击元素触发事件
-    var strBuff = $(this).text().split('\n')[3]
-    var idNumber = '';
-    for(var i =0 ;i < strBuff.length;i++){
+    var strBuff = $(this).text().split(' ')[2];
+    var idNumber = strBuff;
+    /*for(var i =0 ;i < strBuff.length;i++){
         if(strBuff[i]==' ')
             continue;
 
         idNumber=idNumber+strBuff[i];
-    }
-    $(".user-info-page").css({"display":"none"})
-    $(".add-user-page").css({"display":"none"})
+    }*/
+
+    $(".user-info-page").css({"display":"none"});
+    $(".add-user-page").css({"display":"none"});
     $(".modify-info-page").css({"display":"block"});
 
-    alert(idNumber)
+
      $.post("get_user/", { id_number:idNumber},
-          function(user_list){
-            for(var i = 0;i < user_list.length;i++){
-                $('#modify_name').val(user_list[i].name);
-                $('#modify_id_number').val(user_list[i].id_number);
-                $('#modify_wages').val(user_list[i].birth_date);
-                $('#modify_birth_date').val(user_list[i].birth_date);
-                $('#modify_date_of_joining').val(user_list[i].date_of_joining);
-                $('#modify_contact').val(user_list[i].contact);
-                $('#modify_age').val(user_list[i].age);
-                $('#modify_insurer').val(user_list[i].insurer);
-                $('#modify_group').val(user_list[i].group_id);
-                $('#modify_position').val(user_list[i].position_id);
-            }
-    },"json");
+          function(ret){
+              if(ret.img_dict[0].user_photo_name){
+                  $('modify_img')
+              }
+              for(var i = 0;i < ret.user_dict.length;i++){
+                alert(i)
+                $('#modify_name').val(ret.user_dict[i].name);
+                $('#modify_id_number').val(ret.user_dict[i].id_number);
+                $('#modify_wages').val(ret.user_dict[i].wages);
+                $('#modify_birth_date').val(ret.user_dict[i].birth_date);
+                $('#modify_date_of_joining').val(ret.user_dict[i].date_of_joining);
+                $('#modify_contact').val(ret.user_dict[i].contact);
+                $('#modify_age').val(ret.user_dict[i].age);
+                $('#modify_insurer').val(ret.user_dict[i].insurer);
+                $('#modify_group').val(ret.user_dict[i].group_id);
+                $('#modify_position').val(ret.user_dict[i].position_id);
+              }
+
+              for(var i = 0;i < ret.entry_dict.length;i++){
+                  $('.modify-page-table').empty();
+                  $('.modify-page-table').append("<tr><th>时间</th><th>事件(详细)</th><th>依据</th><th>备注</th></tr>");
+                  $('.modify-page-table').append("<tr><td>"+ret.entry_dict[i].date+"</td>\<" +
+                    "td>"+ret.entry_dict[i].entry+"</td>\<" +
+                    "td>"+ret.entry_dict[i].entry_img+"</td>\<" +
+                    "td>"+ret.entry_dict[i].entry_img+"</td></tr>");
+              }
+
+          }, "json");
 
 });
 
@@ -148,7 +164,7 @@ function ages(date)               //计算周岁,网上Copy的,待消化,或者�
     return(-1);
 }
 
-$('li').click(function () {
+$('li').on('click',function () {
 
     $.post("get_group_user/", { group_name:$(this).text()},
           function(user_list){
@@ -156,15 +172,14 @@ $('li').click(function () {
             $(".info-page-table").append("<tr><th>序号</th><th>姓名</th><th>身份证号码</th><th>出生年月</th><th>职务</th><th>所属项目</th></tr>");
             for(var i = 0;i < user_list.length;i++){
 
-                $(".info-page-table").append("<tr>\<" +
-                    "td>"+(i+1)+"</td>\<" +
-                    "td>"+user_list[i].name+"</td>\<" +
-                    "td>"+user_list[i].id_number+"</td>\<" +
-                    "td>"+user_list[i].id_number+"</td>\<" +
-                    "td>"+user_list[i].birth_date+"</td>\<" +
-                    "td>"+user_list[i].group_id+"</td>\<" +
+                $(".info-page-table").append("<tr>" +
+                    "<td>"+(i+1)+"</td> \<" +
+                    "td>"+user_list[i].name+"</td> \<" +
+                    "td>"+user_list[i].id_number+"</td> \<" +
+                    "td>"+user_list[i].birth_date+"</td> \<" +
+                    "td>"+user_list[i].position_id+"</td> \<" +
+                    "td>"+user_list[i].group_id+"</td> \<" +
                     "/tr>");
-
             }
     },"json");
 
