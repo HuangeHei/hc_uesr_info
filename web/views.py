@@ -1,8 +1,11 @@
 from django.shortcuts import render,render_to_response,redirect #返回Html网页,和跳转
 from django.http import HttpResponse
-from web.helper import upfile_save,add_user_info
+from web.helper import upfile_save,add_user_info,convert_to_dicts
 from web.models import user_info,userinfo_photo,group,position
+import json
 # Create your views here.
+
+
 
 
 def userinfo(request):
@@ -21,4 +24,19 @@ def adduser(request):
 
     else:
 
-        return HttpResponse('no ok')
+        return HttpResponse('no_ok')
+
+def get_group_user(request):
+    if request.method == 'POST':
+
+        group_obj = group.objects.get(group_name=request.POST['group_name'])
+        list_tmp = user_info.objects.filter(group=group_obj)
+        user_list = convert_to_dicts(list_tmp)
+
+        return HttpResponse(json.dumps(user_list))
+
+def get_user(request):
+    if request.method == 'POST':
+        list_tmp = user_info.objects.filter(id_number=request.POST['id_number'])
+        user_list = convert_to_dicts(list_tmp)
+        return HttpResponse(json.dumps(user_list))

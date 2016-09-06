@@ -67,8 +67,24 @@ def add_user_info(request):#添加用户进入数据库
                              )
 
 
-    '''
-    user_list = user_info.objects.all().filter(group__group_name='公司总部')一对多关系中
-    print(user_list[0].group.group_name)一对多关系中 获取到单个用户的对象只需要一对多键后面加"."索引就可以
+    '''user_list = user_info.objects.all().filter(group__group_name='公司总部')一对多关系中print(user_list[0].group.group_name)一对多关系中 获取到单个用户的对象只需要一对多键后面加"."索引就可以
     '''
     return True
+
+def convert_to_dicts(objs):
+
+    '''''把对象列表转换为字典列表'''
+
+    obj_arr = []
+
+    for item in objs:
+        # 把Object对象转换成Dict
+        dict = {}
+        dict.update(item.__dict__)
+        dict.pop("_state", None)  # 去除掉多余的字段
+        dict['date_of_joining'] = str(dict['date_of_joining']).split(' ')[0]
+        dict['birth_date'] = str(dict['birth_date']).split(' ')[0]
+
+        obj_arr.append(dict)
+
+    return obj_arr

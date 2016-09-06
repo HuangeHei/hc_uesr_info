@@ -76,6 +76,24 @@ $(".user-info-page tr").dblclick(function () {//点击要修改的行,获取身�
     $(".user-info-page").css({"display":"none"})
     $(".add-user-page").css({"display":"none"})
     $(".modify-info-page").css({"display":"block"});
+
+    alert(idNumber)
+     $.post("get_user/", { id_number:idNumber},
+          function(user_list){
+            for(var i = 0;i < user_list.length;i++){
+                $('#modify_name').val(user_list[i].name);
+                $('#modify_id_number').val(user_list[i].id_number);
+                $('#modify_wages').val(user_list[i].birth_date);
+                $('#modify_birth_date').val(user_list[i].birth_date);
+                $('#modify_date_of_joining').val(user_list[i].date_of_joining);
+                $('#modify_contact').val(user_list[i].contact);
+                $('#modify_age').val(user_list[i].age);
+                $('#modify_insurer').val(user_list[i].insurer);
+                $('#modify_group').val(user_list[i].group_id);
+                $('#modify_position').val(user_list[i].position_id);
+            }
+    },"json");
+
 });
 
 $("#search_button").click(function () {
@@ -129,3 +147,25 @@ function ages(date)               //计算周岁,网上Copy的,待消化,或者�
     }
     return(-1);
 }
+
+$('li').click(function () {
+
+    $.post("get_group_user/", { group_name:$(this).text()},
+          function(user_list){
+            $(".info-page-table").empty();
+            $(".info-page-table").append("<tr><th>序号</th><th>姓名</th><th>身份证号码</th><th>出生年月</th><th>职务</th><th>所属项目</th></tr>");
+            for(var i = 0;i < user_list.length;i++){
+
+                $(".info-page-table").append("<tr>\<" +
+                    "td>"+(i+1)+"</td>\<" +
+                    "td>"+user_list[i].name+"</td>\<" +
+                    "td>"+user_list[i].id_number+"</td>\<" +
+                    "td>"+user_list[i].id_number+"</td>\<" +
+                    "td>"+user_list[i].birth_date+"</td>\<" +
+                    "td>"+user_list[i].group_id+"</td>\<" +
+                    "/tr>");
+
+            }
+    },"json");
+
+});

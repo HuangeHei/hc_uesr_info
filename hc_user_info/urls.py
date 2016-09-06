@@ -21,5 +21,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'userinfo/$', web.views.userinfo,name='userinfo'),
     url(r'adduser/$', web.views.adduser, name='adduser'),
+    url(r'get_group_user/$', web.views.get_group_user, name='get_group_user'),
+    url(r'get_user/$', web.views.get_user, name='get_user'),
     url(r'^$',web.views.userinfo,name='userinfo'),#开头为无的
 ]
