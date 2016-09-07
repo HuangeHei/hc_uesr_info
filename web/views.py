@@ -53,3 +53,8 @@ def get_user(request):
         ret['img_dict'] = img_dict
 
         return HttpResponse(json.dumps(ret))
+
+def get_img(request):
+    if request.method == 'GET':
+        img_name = request.GET.get('img_name')
+        return HttpResponse('<img src="../static/user_photo/'+img_name+'"><img>')

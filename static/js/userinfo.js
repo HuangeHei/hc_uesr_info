@@ -3,6 +3,7 @@
  */
 
 
+
 function getNowFormatDate(){
         var date = new Date();
         var seperator1 = "-";//分割符号
@@ -83,10 +84,12 @@ $(".info-page-table").delegate('tr','dblclick',function(){//点击要修改的�
      $.post("get_user/", { id_number:idNumber},
           function(ret){
               if(ret.img_dict[0].user_photo_name){
-                  $('modify_img')
+
+                  $('#modify_img').attr('src','../static/user_photo/'+ret.img_dict[0].user_photo_name)
+
               }
               for(var i = 0;i < ret.user_dict.length;i++){
-                alert(i)
+
                 $('#modify_name').val(ret.user_dict[i].name);
                 $('#modify_id_number').val(ret.user_dict[i].id_number);
                 $('#modify_wages').val(ret.user_dict[i].wages);
@@ -166,6 +169,17 @@ function ages(date)               //计算周岁,网上Copy的,待消化,或者�
 
 $('li').on('click',function () {
 
+
+    $(".user-info-page").css({"display":"block"});//只要点击了li 不管在什么页面都返回 user-info-page 页面
+    $(".add-user-page").css({"display":"none"});
+    $(".modify-info-page").css({"display":"none"});
+
+
+    $('li').css({'border-left':'0','color':'#767676','font-weight':'400'}); //清除所有li标签的加粗
+    $(this).css({'border-left':'4px solid #2299ee', 'color':'#2299ee','font-weight':'600'});//赋予本组加粗
+
+
+
     $.post("get_group_user/", { group_name:$(this).text()},
           function(user_list){
             $(".info-page-table").empty();
@@ -184,3 +198,7 @@ $('li').on('click',function () {
     },"json");
 
 });
+
+(function () { //js 都是开始加载的时候就绑定了  这个放在前面就绑定不到点击事件
+    $('li:eq(1)').trigger("click");
+})();

@@ -58,6 +58,7 @@ def add_user_info(request):#添加用户进入数据库
                              position=add_position,
     )
 
+
     userinfo_photo.objects.create(user_name=request.POST['name'],
                                   user_id_number=request.POST['id_number'],
                                   user_photo_name=file_name)

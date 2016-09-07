@@ -124,7 +124,7 @@ table {
     cursor: pointer;
 }
 .sidebar li:hover{/*侧边栏li:hover*/
-    border-left: 4px solid  #2299ee;
+    border-left: 4px solid #2299ee;
     color: #2299ee;
     font-weight: 600;
 }
