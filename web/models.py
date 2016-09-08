@@ -17,7 +17,6 @@ class user_info(models.Model):
     birth_date = models.DateTimeField()                                             #生日
     date_of_joining = models.DateTimeField()   #auto_now=True自动设置入职时间          #入职时间
     contact = models.CharField(max_length=256)                                      #联系方式
-    age = models.IntegerField()                                                     #年龄
     insurer = models.IntegerField(max_length=2,default=0)                           #是否投保
     group = models.ForeignKey(group)                                                #项目组
     position = models.ForeignKey(position)                                          #是职位

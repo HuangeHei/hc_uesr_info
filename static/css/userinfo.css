@@ -431,6 +431,8 @@ table.info-page-table tr:hover th{ /*tr行变色要想生效必须要让td的背
     line-height: 30px;
     cursor: pointer;
 }
+
+
 .modify-info-page-left span{
     display: inline-block;
     width: 80px;

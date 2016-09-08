@@ -90,26 +90,29 @@ $(".info-page-table").delegate('tr','dblclick',function(){//点击要修改的�
               }
               for(var i = 0;i < ret.user_dict.length;i++){
 
+                var id_number = ret.user_dict[i].id_number;
+                var id_number = id_number.substring(6, 10)+"-"+id_number.substring(10, 12)+"-"+id_number.substring(12, 14);
+
                 $('#modify_name').val(ret.user_dict[i].name);
                 $('#modify_id_number').val(ret.user_dict[i].id_number);
                 $('#modify_wages').val(ret.user_dict[i].wages);
                 $('#modify_birth_date').val(ret.user_dict[i].birth_date);
                 $('#modify_date_of_joining').val(ret.user_dict[i].date_of_joining);
                 $('#modify_contact').val(ret.user_dict[i].contact);
-                $('#modify_age').val(ret.user_dict[i].age);
                 $('#modify_insurer').val(ret.user_dict[i].insurer);
-                $('#modify_group').val(ret.user_dict[i].group_id);
+                $('#modify_age').val(ages(id_number));
+                $('#modify_position').val(ret.user_dict[i].position_id);
                 $('#modify_position').val(ret.user_dict[i].position_id);
               }
 
               for(var i = 0;i < ret.entry_dict.length;i++){
                   $('.modify-page-table').empty();
-                  $('.modify-page-table').append("<tr><th>时间</th><th>事件(详细)</th><th>依据</th><th>备注</th></tr>");
+                  $('.modify-page-table').append("<tr><th>时间</th><th>事件(详细)</th><th>依据</th></tr>");
                   $('.modify-page-table').append("<tr><td>"+ret.entry_dict[i].date+"</td>\<" +
                     "td>"+ret.entry_dict[i].entry+"</td>\<" +
-                    "td>"+ret.entry_dict[i].entry_img+"</td>\<" +
                     "td>"+ret.entry_dict[i].entry_img+"</td></tr>");
               }
+
 
           }, "json");
 

@@ -52,7 +52,6 @@ def add_user_info(request):#添加用户进入数据库
                              birth_date=request.POST['birth_date'],
                              date_of_joining=request.POST['date_of_joining'],
                              contact=request.POST['contact'],
-                             age=request.POST['age'],
                              insurer=request.POST['insurer'],
                              group=add_group,
                              position=add_position,
