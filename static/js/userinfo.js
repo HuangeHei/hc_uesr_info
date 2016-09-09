@@ -1,8 +1,8 @@
 /**
  * Created by Huanghei on 16/8/21.
  */
-
-
+var group_dic = new Array();
+var position_dic = new Array();
 
 function getNowFormatDate(){
         var date = new Date();
@@ -84,9 +84,11 @@ $(".info-page-table").delegate('tr','dblclick',function(){//点击要修改的�
      $.post("get_user/", { id_number:idNumber},
           function(ret){
               if(ret.img_dict[0].user_photo_name){
-
-                  $('#modify_img').attr('src','../static/user_photo/'+ret.img_dict[0].user_photo_name)
-
+                  if(ret.img_dict[0].user_photo_name == 'pic_none'){
+                     $('#modify_img').attr('src','../static/toux.jpg')
+                  }else{
+                     $('#modify_img').attr('src','../static/user_photo/'+ret.img_dict[0].user_photo_name)
+                  }
               }
               for(var i = 0;i < ret.user_dict.length;i++){
 
@@ -101,13 +103,13 @@ $(".info-page-table").delegate('tr','dblclick',function(){//点击要修改的�
                 $('#modify_contact').val(ret.user_dict[i].contact);
                 $('#modify_insurer').val(ret.user_dict[i].insurer);
                 $('#modify_age').val(ages(id_number));
-                $('#modify_position').val(ret.user_dict[i].position_id);
+                $('#modify_group').val(ret.user_dict[i].group_id);
                 $('#modify_position').val(ret.user_dict[i].position_id);
               }
-
+              $('.modify-page-table').empty();//清空表
+              $('.modify-page-table').append("<tr><th>时间</th><th>事件(详细)</th><th>依据</th></tr>");//添加表头
               for(var i = 0;i < ret.entry_dict.length;i++){
-                  $('.modify-page-table').empty();
-                  $('.modify-page-table').append("<tr><th>时间</th><th>事件(详细)</th><th>依据</th></tr>");
+
                   $('.modify-page-table').append("<tr><td>"+ret.entry_dict[i].date+"</td>\<" +
                     "td>"+ret.entry_dict[i].entry+"</td>\<" +
                     "td>"+ret.entry_dict[i].entry_img+"</td></tr>");
@@ -118,8 +120,41 @@ $(".info-page-table").delegate('tr','dblclick',function(){//点击要修改的�
 
 });
 
+$("#search").focus(function () {
+    $('.user-info-page-top').text('输入人员姓名进行人员查找')
+});
+
+$("#search").blur(function () {
+    $('.user-info-page-top').text('双击行进行修改或查看详细信息')
+});
+
 $("#search_button").click(function () {
-    
+
+      $.post("search_user/", { name:$("#search").val()},
+          function(user_list){
+
+            if(user_list == 'Null'){
+                alert('没有找到此人员')
+            }else{
+
+                $(".info-page-table").empty();
+                $(".info-page-table").append("<tr><th>序号</th><th>姓名</th><th>身份证号码</th><th>出生年月</th><th>年龄</th><th>是否购买保险</th><th>职务</th><th>所属项目</th></tr>");
+                for(var i = 0;i < user_list.length;i++){
+
+                    $(".info-page-table").append("<tr>" +
+                        "<td>"+(i+1)+"</td> \<" +
+                        "td>"+user_list[i].name+"</td> \<" +
+                        "td>"+user_list[i].id_number+"</td> \<" +
+                        "td>"+user_list[i].birth_date+"</td> \<" +
+                        "td>"+ages(user_list[i].birth_date)+"</td> \<" +
+                        "td>"+false_true(user_list[i].insurer)+"</td> \<" +
+                        "td>"+position_dic[user_list[i].position_id]+"</td> \<" +
+                        "td>"+group_dic[user_list[i].group_id]+"</td> \<" +
+                        "/tr>");
+                }
+                $("#search").val('');//清空搜索框
+            }
+    },"json");
 });
 
 
@@ -129,12 +164,24 @@ $("#add_user").click(function () {
 
 $("#out_user").click(function () {
     /*搜索按钮触发*/
-    alert('out_user')
+    $.post("get_insurer/", {id_number:$("#modify_id_number").val()},
+          function(ret){
+
+            if(ret){
+                alert('该用户有保险请更换完保险再来进行离职');
+            }
+            else if(!ret){
+                $.post("del_user/", {id_number:$("#modify_id_number").val()},
+                    function(ret){
+                        alert(ret);
+                },"json");
+            }
+    },"json");
 });
 
 
 $("#modify_info").click(function () {
-    /*添加人员按钮触发*/
+    /*修改人员信息按钮触发*/
     alert('modify_info')
 });
 
@@ -185,23 +232,50 @@ $('li').on('click',function () {
 
     $.post("get_group_user/", { group_name:$(this).text()},
           function(user_list){
-            $(".info-page-table").empty();
-            $(".info-page-table").append("<tr><th>序号</th><th>姓名</th><th>身份证号码</th><th>出生年月</th><th>职务</th><th>所属项目</th></tr>");
-            for(var i = 0;i < user_list.length;i++){
+                $('.user-info-page-top').text('双击行进行修改或查看详细信息')
+                if(user_list.length == 0){
+                    $('.user-info-page-top').text('该项目当前暂无人员')
+                }
 
-                $(".info-page-table").append("<tr>" +
-                    "<td>"+(i+1)+"</td> \<" +
-                    "td>"+user_list[i].name+"</td> \<" +
-                    "td>"+user_list[i].id_number+"</td> \<" +
-                    "td>"+user_list[i].birth_date+"</td> \<" +
-                    "td>"+user_list[i].position_id+"</td> \<" +
-                    "td>"+user_list[i].group_id+"</td> \<" +
-                    "/tr>");
-            }
+                $(".info-page-table").empty();
+                $(".info-page-table").append("<tr><th>序号</th><th>姓名</th><th>身份证号码</th><th>出生年月</th><th>年龄</th><th>是否购买保险</th><th>职务</th><th>所属项目</th></tr>");
+                for(var i = 0;i < user_list.length;i++){
+
+                    $(".info-page-table").append("<tr>" +
+                        "<td>"+(i+1)+"</td> \<" +
+                        "td>"+user_list[i].name+"</td> \<" +
+                        "td>"+user_list[i].id_number+"</td> \<" +
+                        "td>"+user_list[i].birth_date+"</td> \<" +
+                        "td>"+ages(user_list[i].birth_date)+"</td> \<" +
+                        "td>"+false_true(user_list[i].insurer)+"</td> \<" +
+                        "td>"+position_dic[user_list[i].position_id]+"</td> \<" +
+                        "td>"+group_dic[user_list[i].group_id]+"</td> \<" +
+                        "/tr>");
+                }
+
     },"json");
 
 });
 
+function false_true(val){
+    if(val == 1){
+        return('是')
+    }
+    else if(val == 2){
+        return('否')
+    }
+}
+
+
 (function () { //js 都是开始加载的时候就绑定了  这个放在前面就绑定不到点击事件
     $('li:eq(1)').trigger("click");
+
+    for(var i=0;i < $("#group option").length;i++){
+        group_dic[$("#group option")[i].value] = $("#group option")[i].text
+    }
+
+    for(var i=0;i < $("#position option").length;i++){
+        position_dic[$("#position option")[i].value] = $("#position option")[i].text
+    }
+
 })();

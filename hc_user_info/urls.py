@@ -24,5 +24,8 @@ urlpatterns = [
     url(r'get_group_user/$', web.views.get_group_user, name='get_group_user'),
     url(r'get_user/$', web.views.get_user, name='get_user'),
     url(r'get_img/$', web.views.get_img, name='get_img'),
+    url(r'get_insurer/$', web.views.get_insurer, name='get_insurer'),
+    url(r'del_user/$', web.views.del_user, name='del_user'),
+    url(r'search_user/$', web.views.search_user, name='search_user'),
     url(r'^$',web.views.userinfo,name='userinfo'),#开头为无的
 ]

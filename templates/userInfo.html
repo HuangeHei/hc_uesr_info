@@ -40,7 +40,7 @@
                 <div class="search">
                     <input id='add_button' type="button" value="添加">
                     <div class="search-content">
-                        <input type="text">
+                        <input id="search" type="text">
                         <input id="search_button" type="button" value="搜索">
                     </div>
                 </div>
@@ -52,7 +52,9 @@
                             <th>姓名</th>
                             <th>身份证号码</th>
                             <th>出生年月</th>
-                            <th>职务</th>
+                            <th>是否购买保险</th>
+                            <th>年龄</th>
+                            <th>职位</th>
                             <th>所属项目</th>
                         </tr>
                     </table>
@@ -76,12 +78,12 @@
                             <option value="1">是</option>
                             <option value="2">否</option>
                         </select><p>
-                        <span>所在项目:</span><select name="group">
+                        <span>所在项目:</span><select id="group" name="group">
                             {% for item in group_list %}
                                 <option value={{ item.id }}>{{ item.group_name }}</option>
                             {% endfor %}
                         </select>
-                        <span>所在职位:</span><select name="position">
+                        <span>所在职位:</span><select id="position" name="position">
                             {% for item in position_list %}
                                 <option value={{ item.id }}>{{ item.position_name }}</option>
                             {% endfor %}
@@ -109,25 +111,25 @@
             <div class="modify-info-page">
                 <div class="modify-info-page-top"><input id="modify_back" type="button" value="返回"></div>
                 <div class="modify-info-page-left">
-                    <span>姓名:</span><input id="modify_name" type="text" />
+                    <span>姓名:</span><input id="modify_name" type="text"  ondblclick="celar();"/>
                     <span>身份证码:</span><input id="modify_id_number" type="text" /><p>
                     <span>工资:</span><input id="modify_wages" type="text" />
                     <span>出生年月:</span><input id="modify_birth_date" type="text" /><p>
                     <span>入职时间:</span><input id="modify_date_of_joining" type="text" />
                     <span>联系方式:</span><input id="modify_contact" type="text" /><p>
                     <span>年龄:</span><input id="modify_age" type="text" />
-                    <span>是否投保:</span><select id="modify_insurer">
-                    <option value="1">是</option>
-                    <option value="2">否</option>
+                    <span>是否投保:</span><select id="modify_insurer" >
+                    <option value="1" >是</option>
+                    <option value="2" >否</option>
                 </select><p>
                     <span>所在项目:</span><select id="modify_group" name="group">
                         {% for item in group_list %}
-                            <option value={{ item.id }}>{{ item.group_name }}</option>
+                            <option value={{ item.id }} >{{ item.group_name }}</option>
                         {% endfor %}
                     </select>
                     <span>所在职位:</span><select id="modify_position" name="position">
                         {% for item in position_list %}
-                            <option value={{ item.id }}>{{ item.position_name }}</option>
+                            <option value={{ item.id }} >{{ item.position_name }}</option>
                         {% endfor %}
                     </select><p>
                 </div>

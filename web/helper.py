@@ -90,3 +90,13 @@ def convert_to_dicts(objs):
         obj_arr.append(dict)
 
     return obj_arr
+
+def outspace(strBuff):
+    ret = ''
+    for i in strBuff:
+        if i == ' ':
+            pass
+        else:
+            ret += i
+
+    return ret
