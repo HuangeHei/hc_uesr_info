@@ -3,6 +3,7 @@
  */
 var group_dic = new Array();
 var position_dic = new Array();
+var user_info = new Array();
 
 function getNowFormatDate(){
         var date = new Date();
@@ -92,19 +93,30 @@ $(".info-page-table").delegate('tr','dblclick',function(){//点击要修改的�
               }
               for(var i = 0;i < ret.user_dict.length;i++){
 
-                var id_number = ret.user_dict[i].id_number;
-                var id_number = id_number.substring(6, 10)+"-"+id_number.substring(10, 12)+"-"+id_number.substring(12, 14);
+                    var id_number = ret.user_dict[i].id_number;
+                    var id_number = id_number.substring(6, 10)+"-"+id_number.substring(10, 12)+"-"+id_number.substring(12, 14);
 
-                $('#modify_name').val(ret.user_dict[i].name);
-                $('#modify_id_number').val(ret.user_dict[i].id_number);
-                $('#modify_wages').val(ret.user_dict[i].wages);
-                $('#modify_birth_date').val(ret.user_dict[i].birth_date);
-                $('#modify_date_of_joining').val(ret.user_dict[i].date_of_joining);
-                $('#modify_contact').val(ret.user_dict[i].contact);
-                $('#modify_insurer').val(ret.user_dict[i].insurer);
-                $('#modify_age').val(ages(id_number));
-                $('#modify_group').val(ret.user_dict[i].group_id);
-                $('#modify_position').val(ret.user_dict[i].position_id);
+                    $('#modify_name').val(ret.user_dict[i].name);
+                    $('#modify_id_number').val(ret.user_dict[i].id_number);
+                    $('#modify_wages').val(ret.user_dict[i].wages);
+                    $('#modify_birth_date').val(ret.user_dict[i].birth_date);
+                    $('#modify_date_of_joining').val(ret.user_dict[i].date_of_joining);
+                    $('#modify_contact').val(ret.user_dict[i].contact);
+                    $('#modify_insurer').val(ret.user_dict[i].insurer);
+                    $('#modify_age').val(ages(id_number));
+                    $('#modify_group').val(ret.user_dict[i].group_id);
+                    $('#modify_position').val(ret.user_dict[i].position_id);
+
+                    user_info['name'] = ret.user_dict[i].name;
+                    user_info['id_number'] = ret.user_dict[i].id_number;
+                    user_info['wages'] = ret.user_dict[i].wages;
+                    user_info['birth_date'] = ret.user_dict[i].birth_date;
+                    user_info['date_of_joining'] = ret.user_dict[i].date_of_joining;
+                    user_info['contact'] = ret.user_dict[i].contact;
+                    user_info['insurer'] = ret.user_dict[i].insurer;
+                    user_info['group_id'] = ret.user_dict[i].group_id;
+                    user_info['position_id'] = ret.user_dict[i].position_id;
+
               }
               $('.modify-page-table').empty();//清空表
               $('.modify-page-table').append("<tr><th>时间</th><th>事件(详细)</th><th>依据</th></tr>");//添加表头
@@ -182,7 +194,26 @@ $("#out_user").click(function () {
 
 $("#modify_info").click(function () {
     /*修改人员信息按钮触发*/
-    alert('modify_info')
+    var modify_dic = new Array();
+    if(user_info['name'] != $('#modify_name').val()){
+       modify_dic['name'] = $('#modify_name').val();
+       alert(modify_dic['name'])
+    }
+       user_info['id_number']
+       user_info['wages']
+       user_info['birth_date']
+       user_info['date_of_joining']
+       user_info['contact']
+       user_info['insurer']
+       user_info['group_id']
+       user_info['position_id']
+
+
+    if($('#modify_upload').val() == ''){
+        alert('No')
+    }
+
+
 });
 
 function ages(date)               //计算周岁,网上Copy的,待消化,或者待自写
