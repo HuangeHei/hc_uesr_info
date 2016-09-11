@@ -89,3 +89,75 @@ def search_user(request):
     ret = convert_to_dicts(user_list)
     return HttpResponse(json.dumps(ret))
 
+def modify_user_info(request):
+    user_obj = user_info.objects.get(id_number = request.POST['modify_id_number'])
+
+    if request.POST.get('name',False):
+
+        user_entry.objects.create(user_id_number=request.POST['modify_id_number'],
+                          entry="姓名变更由: "+user_obj.name+" 变更为: "+request.POST.get('name'),
+                          entry_img='None')
+
+        user_obj.name=request.POST.get('name')
+        user_obj.save()
+
+    if request.POST.get('wages', False):
+        print(type(request.POST.get('wages')),request.POST.get('wages'))
+        user_entry.objects.create(user_id_number=request.POST['modify_id_number'],
+                                  entry="工资变更由: " + str(user_obj.wages) + " 变更为: " + request.POST.get('wages'),
+                                  entry_img='None')
+        user_obj.wages = int(request.POST.get('wages'))
+        user_obj.save()
+
+    if request.POST.get('birth_date', False):
+        user_entry.objects.create(user_id_number=request.POST['modify_id_number'],
+                                  entry="出生日期变更由: " + str(user_obj.birth_date) + " 变更为: " + request.POST.get('birth_date'),
+                                  entry_img='None')
+        user_obj.birth_date = request.POST.get('birth_date')
+        user_obj.save()
+
+    if request.POST.get('date_of_joining', False):
+        user_entry.objects.create(user_id_number=request.POST['modify_id_number'],
+                                  entry="入职日期变更由: " + str(user_obj.date_of_joining) + " 变更为: " + request.POST.get('date_of_joining'),
+                                  entry_img='None')
+        user_obj.date_of_joining = request.POST.get('date_of_joining')
+        user_obj.save()
+
+    if request.POST.get('contact', False):
+        user_entry.objects.create(user_id_number=request.POST['modify_id_number'],
+                                  entry="联系方式变更由: " + user_obj.contact + " 变更为: " + request.POST.get('contact'),
+                                  entry_img='None')
+        user_obj.contact = request.POST.get('contact')
+        user_obj.save()
+
+    if request.POST.get('insurer', False):
+
+        if request.POST.get('insurer') == '1':
+            insurer = '已购买'
+        else:
+            insurer = '未购买'
+
+        user_entry.objects.create(user_id_number=request.POST['modify_id_number'],
+                                  entry="保险状态变更为: " + insurer,
+                                  entry_img='None')
+
+        user_obj.insurer = request.POST.get('insurer')
+        user_obj.save()
+
+    if request.POST.get('group', False):
+        group_obj = group.objects.get(id=int(request.POST.get('group')))
+        user_entry.objects.create(user_id_number=request.POST['modify_id_number'],
+                                  entry="项目组由: "+user_obj.group.group_name+" 变更为: "+group_obj.group_name,
+                                  entry_img='None')
+        user_obj.group = group_obj
+        user_obj.save()
+
+    if request.POST.get('position', False):
+        position_obj = position.objects.get(id=int(request.POST.get('position')))
+        user_entry.objects.create(user_id_number=request.POST['modify_id_number'],
+                                  entry="职位由: "+user_obj.position.position_name+" 变更为: "+position_obj.position_name,
+                                  entry_img='None')
+        user_obj.position = position_obj
+        user_obj.save()
+
+    return HttpResponse(json.dumps('ok'))

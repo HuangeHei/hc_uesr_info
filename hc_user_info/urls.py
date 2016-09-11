@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'get_insurer/$', web.views.get_insurer, name='get_insurer'),
     url(r'del_user/$', web.views.del_user, name='del_user'),
     url(r'search_user/$', web.views.search_user, name='search_user'),
+    url(r'modify_user_info/$', web.views.modify_user_info, name='modify_user_info'),
     url(r'^$',web.views.userinfo,name='userinfo'),#开头为无的
 ]

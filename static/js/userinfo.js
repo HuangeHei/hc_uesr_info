@@ -4,6 +4,25 @@
 var group_dic = new Array();
 var position_dic = new Array();
 var user_info = new Array();
+var key_name = {'modify_name':'name',
+    'modify_id_number':'id_number',
+    'modify_wages':'wages',
+    'modify_birth_date':'birth_date',
+    'modify_date_of_joining':'date_of_joining',
+    'modify_contact':'contact',
+    'modify_insurer':'insurer',
+    'modify_group':'group',
+    'modify_position':'position'};
+
+
+
+function isEmpty(obj){
+    for (var key in obj) {
+        return false;
+    }
+    return true;
+}
+
 
 function getNowFormatDate(){
         var date = new Date();
@@ -114,8 +133,8 @@ $(".info-page-table").delegate('tr','dblclick',function(){//点击要修改的�
                     user_info['date_of_joining'] = ret.user_dict[i].date_of_joining;
                     user_info['contact'] = ret.user_dict[i].contact;
                     user_info['insurer'] = ret.user_dict[i].insurer;
-                    user_info['group_id'] = ret.user_dict[i].group_id;
-                    user_info['position_id'] = ret.user_dict[i].position_id;
+                    user_info['group'] = ret.user_dict[i].group_id;
+                    user_info['position'] = ret.user_dict[i].position_id;
 
               }
               $('.modify-page-table').empty();//清空表
@@ -194,23 +213,37 @@ $("#out_user").click(function () {
 
 $("#modify_info").click(function () {
     /*修改人员信息按钮触发*/
-    var modify_dic = new Array();
-    if(user_info['name'] != $('#modify_name').val()){
-       modify_dic['name'] = $('#modify_name').val();
-       alert(modify_dic['name'])
+
+    var modify_dic = new FormData();
+    modify_dic.append('modify_id_number',user_info['id_number']);
+    var modify = 0;
+
+    for(key in key_name){
+
+       if(user_info[key_name[key]] != $('#'+key).val()){
+            modify_dic.append(key_name[key],$('#'+key).val())
+            modify = 1;
+       }
+
     }
-       user_info['id_number']
-       user_info['wages']
-       user_info['birth_date']
-       user_info['date_of_joining']
-       user_info['contact']
-       user_info['insurer']
-       user_info['group_id']
-       user_info['position_id']
 
+    if(!($('#modify_upload').val() == '')){
+        modify_dic.append('img',$('#modify_upload').get(0).files[0])
+    }
 
-    if($('#modify_upload').val() == ''){
-        alert('No')
+    if(!modify){
+        alert('修改失败:您并没有修改任何内容')
+    }else{
+       $.ajax({
+            url: "/modify_user_info/",                              //django中post地址末尾必须加上/ 不然就会报错
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: modify_dic,
+            success: function(ret) {
+                console.log(ret)
+            }
+        },'json');
     }
 
 
