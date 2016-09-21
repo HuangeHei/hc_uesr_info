@@ -9,6 +9,7 @@ import json
 
 
 def userinfo(request):
+
     group_list = group.objects.all()
     position_list = position.objects.all()
     return render_to_response('userInfo.html',{'group_list':group_list,'position_list':position_list})
@@ -26,8 +27,10 @@ def adduser(request):
         return HttpResponse('no_ok')
 
 def get_group_user(request):
-    if request.method == 'POST':
 
+    if request.method == 'POST':
+        if request.POST['group_name'] == '项目名称':
+            return HttpResponse(json.dumps(2))
         group_obj = group.objects.get(group_name=request.POST['group_name'])
         list_tmp = user_info.objects.filter(group=group_obj)
         user_list = convert_to_dicts(list_tmp)
@@ -90,10 +93,22 @@ def search_user(request):
     return HttpResponse(json.dumps(ret))
 
 def modify_user_info(request):
+
     user_obj = user_info.objects.get(id_number = request.POST['modify_id_number'])
 
-    if request.POST.get('name',False):
+    if request.POST.get('img',False):
+        if request.POST.get('img') == 'Null':
+            pass
+        else:
+            file_name = upfile_save(request.FILES['img'])
+            user_photo = userinfo_photo.objects.filter(user_id_number=request.POST['modify_id_number'])
+            print('user_photo',user_photo)
+            if user_photo == []:
+                userinfo_photo.objects.create(user_id_number=request.POST['modify_id_number'],user_photo_name=file_name)
+            else:
+                userinfo_photo.objects.filter(user_id_number=request.POST['modify_id_number']).update(user_photo_name=file_name)
 
+    if request.POST.get('name',False):
         user_entry.objects.create(user_id_number=request.POST['modify_id_number'],
                           entry="姓名变更由: "+user_obj.name+" 变更为: "+request.POST.get('name'),
                           entry_img='None')
@@ -111,8 +126,9 @@ def modify_user_info(request):
 
     if request.POST.get('birth_date', False):
         user_entry.objects.create(user_id_number=request.POST['modify_id_number'],
-                                  entry="出生日期变更由: " + str(user_obj.birth_date) + " 变更为: " + request.POST.get('birth_date'),
+                                  entry="出生日期变更由: " + str(user_obj.birth_date).split(' ')[0] + " 变更为: " + request.POST.get('birth_date'),
                                   entry_img='None')
+        #str(user_obj.birth_date).split(' ')[0] user_obj.birth_date 时间类型必须转换成str。类型是时间类型  例:1997-06-12 00:00:00 我们不需要后面的00:00:00 所以要用split 切割(空格为分割) 取第一段
         user_obj.birth_date = request.POST.get('birth_date')
         user_obj.save()
 
@@ -160,4 +176,13 @@ def modify_user_info(request):
         user_obj.position = position_obj
         user_obj.save()
 
-    return HttpResponse(json.dumps('ok'))
+    if request.POST.get('id_number', False):
+        user_entry.objects.filter(user_id_number=request.POST['modify_id_number']).update(user_id_number=request.POST['id_number'])
+        userinfo_photo.objects.filter(user_id_number=request.POST['modify_id_number']).update(user_id_number=request.POST['id_number'])
+        user_entry.objects.create(user_id_number=request.POST['id_number'],
+                                  entry="身份证变更由: " + user_obj.id_number + " 变更为: " + request.POST['id_number'],
+                                  entry_img='None')
+        user_info.objects.filter(id_number=request.POST['modify_id_number']).update(id_number=request.POST['id_number'])
+
+
+    return HttpResponse(json.dumps(1))

@@ -24,7 +24,6 @@ class user_info(models.Model):
     display = models.IntegerField(max_length=2,default=1)                           #是否显示，用作删除属性
 
 class userinfo_photo(models.Model):
-    user_name = models.CharField(max_length=256)                                    #用户名称
     user_id_number =  models.CharField(max_length=256)                              #用户id_number
     user_photo_name =  models.CharField(max_length=256)                             #用户图片ID
 

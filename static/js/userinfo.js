@@ -14,8 +14,6 @@ var key_name = {'modify_name':'name',
     'modify_group':'group',
     'modify_position':'position'};
 
-
-
 function isEmpty(obj){
     for (var key in obj) {
         return false;
@@ -40,6 +38,49 @@ function getNowFormatDate(){
         return nowtime;
 }
 
+
+function ages(date)               //计算周岁,网上Copy的,待消化,或者待自写
+{
+    var r = date.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+    if( r == null ){
+        return false;
+    }
+    var birth = new Date(r[1],r[3] - 1,r[4]);
+    if(birth.getFullYear() == r[1] && (birth.getMonth()+1) == r[3] && birth.getDate() == r[4])
+    {
+        var today = new Date();
+        var age = today.getFullYear() - r[1];
+
+        if(today.getMonth() > birth.getMonth()){
+            return age;
+        }
+
+        if(today.getMonth() == birth.getMonth()){
+
+            if(today.getDate() >= birth.getDate()){
+                return age;
+            }
+            else{
+                return age-1;
+            }
+        }
+        if(today.getMonth() < birth.getMonth()){
+            return age-1;
+        }
+    }
+    return(-1);
+}
+
+function false_true(val){
+    if(val == 1){
+        return('是')
+    }
+    else if(val == 2){
+        return('否')
+    }
+}
+
+
 /*以上是function区域*/
 
 $("#add-group").click(function () {
@@ -60,11 +101,19 @@ $("#add_user").click(function (){
 
 });
 
-$("#id_number").blur(function () {
+$("#id_number").blur(function () {//添加页面的监听 身份证 input 进行修改age 和 birth_date
     var id_number = $('#id_number').val();
     var id_number = id_number.substring(6, 10)+"-"+id_number.substring(10, 12)+"-"+id_number.substring(12, 14);
     $('#birth_date').val(id_number);
     $('#age').val(ages(id_number));
+})
+
+
+$("#modify_id_number").blur(function () { //修改页面的监听 身份证 input 进行修改age 和 birth_date
+    var id_number = $('#modify_id_number').val();
+    var id_number = id_number.substring(6, 10)+"-"+id_number.substring(10, 12)+"-"+id_number.substring(12, 14);
+    $('#modify_birth_date').val(id_number);
+    $('#modify_age').val(ages(id_number));
 })
 
 $("#back_user_info").click(function () {
@@ -159,7 +208,7 @@ $("#search").blur(function () {
     $('.user-info-page-top').text('双击行进行修改或查看详细信息')
 });
 
-$("#search_button").click(function () {
+$("#search_button").click(function () { //查找人员
 
       $.post("search_user/", { name:$("#search").val()},
           function(user_list){
@@ -193,7 +242,7 @@ $("#add_user").click(function () {
     /*添加人员按钮触发*/
 });
 
-$("#out_user").click(function () {
+$("#out_user").click(function () { // 清退人员
     /*搜索按钮触发*/
     $.post("get_insurer/", {id_number:$("#modify_id_number").val()},
           function(ret){
@@ -211,7 +260,7 @@ $("#out_user").click(function () {
 });
 
 
-$("#modify_info").click(function () {
+$("#modify_info").click(function () {  //修改人员信息
     /*修改人员信息按钮触发*/
 
     var modify_dic = new FormData();
@@ -228,7 +277,10 @@ $("#modify_info").click(function () {
     }
 
     if(!($('#modify_upload').val() == '')){
+        modify = 1;
         modify_dic.append('img',$('#modify_upload').get(0).files[0])
+    }else{
+        modify_dic.append('img','Null')
     }
 
     if(!modify){
@@ -241,45 +293,18 @@ $("#modify_info").click(function () {
             contentType: false,
             data: modify_dic,
             success: function(ret) {
-                console.log(ret)
+                if(ret == 1){
+                    alert('修改成功');
+
+                    $("li:eq("+$("#modify_group").val()+")").trigger("click"); // eq定位第几个，可以使用到modif_group.val 要取到实际input的内容不是全局用户信息存储的内容不行
+
+                }
             }
         },'json');
     }
 
 
 });
-
-function ages(date)               //计算周岁,网上Copy的,待消化,或者待自写
-{
-    var r = date.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
-    if( r == null ){
-        return false;
-    }
-    var birth = new Date(r[1],r[3] - 1,r[4]);
-    if(birth.getFullYear() == r[1] && (birth.getMonth()+1) == r[3] && birth.getDate() == r[4])
-    {
-        var today = new Date();
-        var age = today.getFullYear() - r[1];
-
-        if(today.getMonth() > birth.getMonth()){
-            return age;
-        }
-
-        if(today.getMonth() == birth.getMonth()){
-
-            if(today.getDate() >= birth.getDate()){
-                return age;
-            }
-            else{
-                return age-1;
-            }
-        }
-        if(today.getMonth() < birth.getMonth()){
-            return age-1;
-        }
-    }
-    return(-1);
-}
 
 $('li').on('click',function () {
 
@@ -296,7 +321,7 @@ $('li').on('click',function () {
 
     $.post("get_group_user/", { group_name:$(this).text()},
           function(user_list){
-                $('.user-info-page-top').text('双击行进行修改或查看详细信息')
+                $('.user-info-page-top').text('双击行进行修改或查看详细信息(字体颜色为红色的为已离职人员,离职人员信息会在30日内删除,如有特殊需要请联系管理员)')
                 if(user_list.length == 0){
                     $('.user-info-page-top').text('该项目当前暂无人员')
                 }
@@ -304,8 +329,9 @@ $('li').on('click',function () {
                 $(".info-page-table").empty();
                 $(".info-page-table").append("<tr><th>序号</th><th>姓名</th><th>身份证号码</th><th>出生年月</th><th>年龄</th><th>是否购买保险</th><th>职务</th><th>所属项目</th></tr>");
                 for(var i = 0;i < user_list.length;i++){
+                    if(user_list[i].display == 2){
 
-                    $(".info-page-table").append("<tr>" +
+                        $(".info-page-table").append("<tr style='color: red;'>" +
                         "<td>"+(i+1)+"</td> \<" +
                         "td>"+user_list[i].name+"</td> \<" +
                         "td>"+user_list[i].id_number+"</td> \<" +
@@ -315,20 +341,26 @@ $('li').on('click',function () {
                         "td>"+position_dic[user_list[i].position_id]+"</td> \<" +
                         "td>"+group_dic[user_list[i].group_id]+"</td> \<" +
                         "/tr>");
+
+                    }else{
+                        $(".info-page-table").append("<tr>" +
+                        "<td>"+(i+1)+"</td> \<" +
+                        "td>"+user_list[i].name+"</td> \<" +
+                        "td>"+user_list[i].id_number+"</td> \<" +
+                        "td>"+user_list[i].birth_date+"</td> \<" +
+                        "td>"+ages(user_list[i].birth_date)+"</td> \<" +
+                        "td>"+false_true(user_list[i].insurer)+"</td> \<" +
+                        "td>"+position_dic[user_list[i].position_id]+"</td> \<" +
+                        "td>"+group_dic[user_list[i].group_id]+"</td> \<" +
+                        "/tr>");
+
+                    }
+
                 }
 
     },"json");
 
 });
-
-function false_true(val){
-    if(val == 1){
-        return('是')
-    }
-    else if(val == 2){
-        return('否')
-    }
-}
 
 
 (function () { //js 都是开始加载的时候就绑定了  这个放在前面就绑定不到点击事件
